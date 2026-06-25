@@ -2,9 +2,10 @@ import { SpinnerCustom } from "@/components/ui/spinner"
 import { useAuth } from "@/context/AuthContext"
 import { Outlet } from "react-router-dom"
 import Navbar from "@/components/shared/Navbar"
+import Footer from "@/components/shared/Footer"
 
 export default function PopupLayout() {
-  const { loading } = useAuth()
+  const { loading, isAuthenticated } = useAuth()
 
   if (loading) {
     return (
@@ -21,6 +22,8 @@ export default function PopupLayout() {
       <div className="flex-1 overflow-y-auto">
         <Outlet />
       </div>
+
+      {isAuthenticated() && <Footer />}
     </main>
   )
 }

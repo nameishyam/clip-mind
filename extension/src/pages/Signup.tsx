@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -84,34 +85,85 @@ export default function Signup() {
   }
 
   return (
-    <div className="p-5">
-      <Card className="border-0 shadow-none">
-        <CardHeader className="px-0 pt-0">
-          <CardTitle>Create account</CardTitle>
-
+    <div className="flex min-h-[80vh] items-center justify-center p-4">
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Create an account</CardTitle>
           <CardDescription>
-            Create your ClipMind account to start saving and organizing your
-            knowledge.
+            Enter your details below to create a new account
           </CardDescription>
+          <CardAction>
+            <Button
+              variant="link"
+              className="hover:cursor-pointer"
+              onClick={() => navigate("/login")}
+            >
+              Log in
+            </Button>
+          </CardAction>
         </CardHeader>
-
         <form
           onSubmit={signupForm.handleSubmit(handleSubmit)}
-          className="space-y-3"
+          className="space-y-4"
         >
-          <CardContent className="space-y-4 px-0">
-            <div className="grid grid-cols-2 gap-3">
+          <CardContent>
+            <div className="flex flex-col gap-6">
+              <div className="grid grid-cols-2 gap-4">
+                <Controller
+                  name="firstName"
+                  control={signupForm.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name}>First Name</FieldLabel>
+
+                      <Input
+                        {...field}
+                        id={field.name}
+                        placeholder="John"
+                        aria-invalid={fieldState.invalid}
+                      />
+
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                <Controller
+                  name="lastName"
+                  control={signupForm.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name}>Last Name</FieldLabel>
+
+                      <Input
+                        {...field}
+                        id={field.name}
+                        placeholder="Doe"
+                        aria-invalid={fieldState.invalid}
+                      />
+
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+              </div>
+
               <Controller
-                name="firstName"
+                name="email"
                 control={signupForm.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>First Name</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>Email</FieldLabel>
 
                     <Input
                       {...field}
                       id={field.name}
-                      placeholder="John"
+                      type="email"
+                      placeholder="john@example.com"
                       aria-invalid={fieldState.invalid}
                     />
 
@@ -123,18 +175,75 @@ export default function Signup() {
               />
 
               <Controller
-                name="lastName"
+                name="password"
                 control={signupForm.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>Last Name</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>Password</FieldLabel>
 
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder="Doe"
-                      aria-invalid={fieldState.invalid}
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        id={field.name}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        aria-invalid={fieldState.invalid}
+                      />
+
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute top-0 right-0 h-full px-3 py-2"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+
+              <Controller
+                name="confirmPassword"
+                control={signupForm.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>
+                      Confirm Password
+                    </FieldLabel>
+
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        id={field.name}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        aria-invalid={fieldState.invalid}
+                      />
+
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute top-0 right-0 h-full px-3 py-2"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
 
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -143,120 +252,11 @@ export default function Signup() {
                 )}
               />
             </div>
-
-            <Controller
-              name="email"
-              control={signupForm.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-
-                  <Input
-                    {...field}
-                    id={field.name}
-                    type="email"
-                    placeholder="john@example.com"
-                    aria-invalid={fieldState.invalid}
-                  />
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Controller
-              name="password"
-              control={signupForm.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-
-                  <div className="relative">
-                    <Input
-                      {...field}
-                      id={field.name}
-                      type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
-                      aria-invalid={fieldState.invalid}
-                    />
-
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      tabIndex={-1}
-                      className="absolute top-0 right-0 h-full px-3"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Controller
-              name="confirmPassword"
-              control={signupForm.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Confirm Password</FieldLabel>
-
-                  <div className="relative">
-                    <Input
-                      {...field}
-                      id={field.name}
-                      type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
-                      aria-invalid={fieldState.invalid}
-                    />
-
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      tabIndex={-1}
-                      className="absolute top-0 right-0 h-full px-3"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
           </CardContent>
 
-          <CardFooter className="flex flex-col gap-3 px-0">
+          <CardFooter>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? <SpinnerCustom /> : "Create Account"}
-            </Button>
-
-            <Button
-              type="button"
-              variant="link"
-              className="h-auto p-0 text-sm"
-              onClick={() => navigate("/login")}
-            >
-              Already have an account? Log In
+              {isLoading ? <SpinnerCustom /> : "Sign Up"}
             </Button>
           </CardFooter>
         </form>

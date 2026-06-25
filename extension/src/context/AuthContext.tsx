@@ -12,14 +12,18 @@ import type { User, AuthContextType } from "@/lib/types"
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+interface AuthProviderProps {
+  children: ReactNode
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
   const fetchMe = useCallback(async () => {
     try {
       const res = await api.get("/auth/me")
-      setUser(res.data.user || null)
+      setUser(res.data ?? null)
     } catch (err: any) {
       if (err.response?.status === 401) {
         setUser(null)

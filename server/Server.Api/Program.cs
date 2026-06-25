@@ -49,7 +49,7 @@ public static class Program
 
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("Frontend", policy =>
+            options.AddPolicy("Extension", policy =>
             {
                 policy
                     .WithOrigins(builder.Configuration
@@ -66,9 +66,24 @@ public static class Program
 
         var app = builder.Build();
 
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Path == "/")
+            {
+                await context.Response.WriteAsync("clipmind server up and running");
+                return;
+            }
+            await next();
+        });
+
         app.UseHttpsRedirection();
 
-        app.UseCors("Frontend");
+        app.UseCors("Extension");
 
         app.UseAuthentication();
         app.UseAuthorization();

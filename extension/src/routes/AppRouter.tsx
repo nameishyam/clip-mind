@@ -5,6 +5,8 @@ import Login from "@/pages/Login"
 import Signup from "@/pages/Signup"
 import PopupLayout from "@/components/layout/PopupLayout"
 import Dashboard from "@/pages/Dashboard"
+import Profile from "@/pages/Profile"
+import Clips from "@/pages/Clips"
 
 const router = createHashRouter([
   {
@@ -25,6 +27,14 @@ const router = createHashRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/clips",
+        element: <Clips />,
       },
     ],
   },
