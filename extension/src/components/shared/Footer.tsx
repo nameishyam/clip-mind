@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="border-t bg-background px-3 py-2">
       <div className="grid grid-cols-2 gap-2">
-        <Button asChild variant="ghost" className="h-11 p-0">
+        <Button variant="ghost" className="h-8 p-0">
           <NavLink
             to="/clips"
             className={({ isActive }) =>
@@ -22,7 +22,7 @@ export default function Footer() {
           </NavLink>
         </Button>
 
-        <Button asChild variant="ghost" className="h-11 p-0">
+        <Button variant="ghost" className="p-0">
           <NavLink
             to="/profile"
             className={({ isActive }) =>
