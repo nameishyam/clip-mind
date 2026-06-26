@@ -7,6 +7,7 @@ namespace Server.Repository.Context;
 public class ServerDbContext(DbContextOptions<ServerDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users => Set<User>();
+    public DbSet<Clip> Clips => Set<Clip>();
 
     public override int SaveChanges()
     {

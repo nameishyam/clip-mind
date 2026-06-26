@@ -1,42 +1,68 @@
-import { ClipboardList, User } from "lucide-react"
-import { NavLink } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Controller, useForm } from "react-hook-form"
+import z from "zod"
+import { Field } from "../ui/field"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import { PlusIcon } from "lucide-react"
+import { api } from "@/lib/api"
+
+const clipSchema = z.object({
+  clip: z.string(),
+})
 
 export default function Footer() {
+  const clipForm = useForm<z.infer<typeof clipSchema>>({
+    resolver: zodResolver(clipSchema),
+    defaultValues: {
+      clip: "",
+    },
+  })
+
+  async function getCurrentTabUrl() {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    })
+    return tab.url
+  }
+
+  const handleSubmit = async (values: z.infer<typeof clipSchema>) => {
+    const url = await getCurrentTabUrl()
+    const dataToSend = {
+      content: values.clip,
+      url,
+    }
+    await api.post("/clips", dataToSend)
+    clipForm.reset()
+  }
+
   return (
     <footer className="border-t bg-background px-3 py-2">
-      <div className="grid grid-cols-2 gap-2">
-        <Button variant="ghost" className="h-8 p-0">
-          <NavLink
-            to="/clips"
-            className={({ isActive }) =>
-              cn(
-                "flex h-full w-full items-center justify-center gap-2 rounded-md",
-                isActive && "bg-accent text-accent-foreground"
-              )
-            }
-          >
-            <ClipboardList className="h-4 w-4" />
-            <span>Clips</span>
-          </NavLink>
-        </Button>
-
-        <Button variant="ghost" className="p-0">
-          <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              cn(
-                "flex h-full w-full items-center justify-center gap-2 rounded-md",
-                isActive && "bg-accent text-accent-foreground"
-              )
-            }
-          >
-            <User className="h-4 w-4" />
-            <span>Profile</span>
-          </NavLink>
-        </Button>
-      </div>
+      <form
+        onSubmit={clipForm.handleSubmit(handleSubmit)}
+        className="space-y-4"
+      >
+        <div className="flex items-center justify-center gap-3">
+          <Controller
+            name="clip"
+            control={clipForm.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <Input
+                  {...field}
+                  id={field.name}
+                  placeholder="add anything..."
+                  aria-invalid={fieldState.invalid}
+                />
+              </Field>
+            )}
+          />
+          <Button type="submit">
+            <PlusIcon />
+          </Button>
+        </div>
+      </form>
     </footer>
   )
 }

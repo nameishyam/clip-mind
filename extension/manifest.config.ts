@@ -24,7 +24,7 @@ const manifest: ManifestV3Export = {
     default_popup: "index.html",
   },
 
-  permissions: ["storage"],
+  permissions: ["storage", "activeTab"],
 
   host_permissions: [`${API_ORIGIN}/*`],
 }

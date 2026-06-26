@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Server.Repository;
-using Server.Service;
 using System.Text;
+using Server.Api.Extensions;
 
 namespace Server.Api;
 
@@ -75,7 +74,7 @@ public static class Program
         {
             if (context.Request.Path == "/")
             {
-                await context.Response.WriteAsync("clipmind server up and running");
+                await context.Response.WriteAsync("clip-mind server up and running");
                 return;
             }
             await next();
