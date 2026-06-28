@@ -16,9 +16,7 @@ public class ClipsController(IClipService clipService) : ControllerBase
     {
         try
         {
-            await clipService.Create(request, User.GetUserId());
-
-            return Ok();
+            return Ok(await clipService.Create(request, User.GetUserId()));
         }
         catch (Exception e)
         {

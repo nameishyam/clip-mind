@@ -10,4 +10,5 @@ public interface IAuthRepository
     Task<bool> ExistsByEmail(string email);
     Task<User> GetByEmail(string email);
     Task<User?> GetById(Guid id);
+    Task Delete(Guid id);
 }

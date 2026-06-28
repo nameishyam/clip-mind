@@ -5,7 +5,7 @@ import Navbar from "@/components/shared/Navbar"
 import Footer from "@/components/shared/Footer"
 
 export default function PopupLayout() {
-  const { loading, isAuthenticated } = useAuth()
+  const { loading } = useAuth()
 
   if (loading) {
     return (
@@ -16,14 +16,14 @@ export default function PopupLayout() {
   }
 
   return (
-    <main className="flex h-150 w-95 flex-col overflow-hidden rounded-lg border bg-background">
+    <main className="flex h-150 w-95 flex-col overflow-hidden border bg-background">
       <Navbar />
 
       <div className="flex-1 overflow-y-auto">
         <Outlet />
       </div>
 
-      {isAuthenticated() && <Footer />}
+      <Footer />
     </main>
   )
 }

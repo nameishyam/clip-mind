@@ -2,8 +2,6 @@
 
 public class GetMeResponse
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; }
+    public UserResponse User { get; set; } = null!;
+    public IList<ClipResponse> Clips { get; set; } = null!;
 }

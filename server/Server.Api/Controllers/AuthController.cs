@@ -142,6 +142,26 @@ public class AuthController(IAuthService authService) : ControllerBase
         return Ok("Logout successful");
     }
 
+    [HttpDelete]
+    [Authorize]
+    public async Task<IActionResult> Delete()
+    {
+        try
+        {
+            await authService.Delete(User.GetUserId());
+
+            return NoContent();
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
     private void SetAuthCookie(string token)
     {
         Response.Cookies.Append(

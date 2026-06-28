@@ -4,29 +4,28 @@ import {
   useState,
   useCallback,
   useMemo,
-  type ReactNode,
   useEffect,
 } from "react"
 import { api } from "@/lib/api"
-import type { User, AuthContextType } from "@/lib/types"
+import type { User, AuthContextType, Clip } from "@/lib/types"
+import type { AuthProviderProps } from "@/lib/props"
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-interface AuthProviderProps {
-  children: ReactNode
-}
-
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null)
+  const [clips, setClips] = useState<Clip[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   const fetchMe = useCallback(async () => {
     try {
       const res = await api.get("/auth/me")
-      setUser(res.data ?? null)
+      setUser(res.data.user || null)
+      setClips(res.data.clips || [])
     } catch (err: any) {
       if (err.response?.status === 401) {
         setUser(null)
+        setClips([])
       } else {
         console.error("Unexpected /me error:", err)
       }
@@ -48,6 +47,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.log(err)
     }
     setUser(null)
+    setClips([])
   }, [])
 
   const updateUser = useCallback((updates: Partial<User>) => {
@@ -59,14 +59,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const value = useMemo(
     () => ({
       user,
+      setUser,
+      clips,
+      setClips,
       updateUser,
       login,
       logout,
       isAuthenticated,
-      setUser,
       loading,
     }),
-    [user, login, logout, isAuthenticated, updateUser, loading]
+    [user, clips, login, logout, isAuthenticated, updateUser, loading]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -1,11 +1,11 @@
-﻿namespace Server.Domain.Dto.Db;
+﻿namespace Server.Domain.Dto.Response;
 
-public class ClipCreateDb
+public class ClipResponse
 {
-    public Guid UserId { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; } = null!;
     public string Content { get; set; } = null!;
     public string Url { get; set; } = null!;
     public string Domain { get; set; } = null!;
-    public string Metadata { get; set; } = null!;
+    public DateTime CreatedAt { get; set; }
 }

@@ -56,4 +56,11 @@ public class AuthRepository(ServerDbContext context) : IAuthRepository
         return await context.Users
             .FirstOrDefaultAsync(u => u.Id == id);
     }
+
+    public async Task Delete(Guid id)
+    {
+        await context.Users
+            .Where(u => u.Id == id)
+            .ExecuteDeleteAsync();
+    }
 }

@@ -1,17 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import z from "zod"
-import { Field } from "../ui/field"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
+import { Field } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { api } from "@/lib/api"
+import { useAuth } from "@/context/AuthContext"
 
 const clipSchema = z.object({
   clip: z.string(),
 })
 
 export default function Footer() {
+  const { setClips } = useAuth()
+
   const clipForm = useForm<z.infer<typeof clipSchema>>({
     resolver: zodResolver(clipSchema),
     defaultValues: {
@@ -33,7 +36,8 @@ export default function Footer() {
       content: values.clip,
       url,
     }
-    await api.post("/clips", dataToSend)
+    const response = await api.post("/clips", dataToSend)
+    setClips((prev) => [response.data, ...prev])
     clipForm.reset()
   }
 

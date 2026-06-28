@@ -10,5 +10,6 @@ public interface IAuthService
     Task GenerateOtp(string email);
     Task VerifyUser(VerifyRequest request);
     Task ResetUserPassword(ResetRequest request);
+    Task Delete(Guid userId);
     Task<GetMeResponse> GetMeTask(Guid userId);
 }

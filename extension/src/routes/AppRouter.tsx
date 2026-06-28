@@ -3,18 +3,24 @@ import { createHashRouter, RouterProvider } from "react-router-dom"
 import Home from "@/pages/Home"
 import Login from "@/pages/Login"
 import Signup from "@/pages/Signup"
-import PopupLayout from "@/components/layout/PopupLayout"
+import PopupLayout from "@/layout/PopupLayout"
 import Dashboard from "@/pages/Dashboard"
 import Profile from "@/pages/Profile"
+import HomeLayout from "@/layout/HomeLayout"
 
 const router = createHashRouter([
   {
-    element: <PopupLayout />,
+    element: <HomeLayout />,
     children: [
       {
         path: "/",
         element: <Home />,
       },
+    ],
+  },
+  {
+    element: <PopupLayout />,
+    children: [
       {
         path: "/login",
         element: <Login />,
