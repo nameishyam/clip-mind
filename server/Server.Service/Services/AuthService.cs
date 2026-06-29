@@ -8,9 +8,9 @@ using Server.Domain.Dto.Options;
 using Server.Domain.Dto.Request.Auth;
 using Server.Domain.Dto.Response;
 using Server.Domain.Entities;
-using Server.Repository.Interfaces;
+using Server.Domain.Interfaces.Repository;
+using Server.Domain.Interfaces.Service;
 using Server.Service.Exceptions;
-using Server.Service.Interfaces;
 using Server.Service.Templates;
 
 namespace Server.Service.Services;
@@ -135,9 +135,9 @@ public class AuthService(
         {
             User = new UserResponse
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
+                FirstName = user.FirstName!,
+                LastName = user.LastName!,
+                Email = user.Email!,
                 CreatedAt = user.CreatedAt
             },
             Clips = clips
@@ -149,7 +149,7 @@ public class AuthService(
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Email, user.Email)
+            new(JwtRegisteredClaimNames.Email, user.Email!)
         };
 
         var key = new SymmetricSecurityKey(

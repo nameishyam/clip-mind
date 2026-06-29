@@ -1,7 +1,7 @@
 ﻿using Server.Domain.Dto.Db;
 using Server.Domain.Entities;
 
-namespace Server.Repository.Interfaces;
+namespace Server.Domain.Interfaces.Repository;
 
 public interface IClipRepository
 {

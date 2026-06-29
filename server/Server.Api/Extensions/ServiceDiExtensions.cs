@@ -1,5 +1,5 @@
 ﻿using Server.Domain.Dto.Options;
-using Server.Service.Interfaces;
+using Server.Domain.Interfaces.Service;
 using Server.Service.Services;
 
 namespace Server.Api.Extensions;

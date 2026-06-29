@@ -1,8 +1,8 @@
 ﻿using Server.Domain.Dto.Db;
 using Server.Domain.Dto.Request.Clips;
 using Server.Domain.Dto.Response;
-using Server.Repository.Interfaces;
-using Server.Service.Interfaces;
+using Server.Domain.Interfaces.Repository;
+using Server.Domain.Interfaces.Service;
 
 namespace Server.Service.Services;
 

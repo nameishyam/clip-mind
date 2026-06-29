@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server.Domain.Interfaces.Repository;
 using Server.Repository.Context;
-using Server.Repository.Interfaces;
 using Server.Repository.Repositories;
 
 namespace Server.Api.Extensions;

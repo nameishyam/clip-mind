@@ -1,7 +1,7 @@
 ﻿using Server.Domain.Dto.Request.Clips;
 using Server.Domain.Dto.Response;
 
-namespace Server.Service.Interfaces;
+namespace Server.Domain.Interfaces.Service;
 
 public interface IClipService
 {
