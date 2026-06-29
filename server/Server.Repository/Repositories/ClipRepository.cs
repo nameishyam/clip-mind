@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Server.Domain.Dto.Db;
 using Server.Domain.Entities;
 using Server.Domain.Interfaces.Repository;
 using Server.Repository.Context;
@@ -8,17 +7,8 @@ namespace Server.Repository.Repositories;
 
 public class ClipRepository(ServerDbContext context) : IClipRepository
 {
-    public async Task<Guid> Create(ClipCreateDb request)
+    public async Task<Guid> Create(Clip clip)
     {
-        var clip = new Clip
-        {
-            UserId = request.UserId,
-            Content = request.Content,
-            Domain = request.Domain,
-            Title = request.Title,
-            Url = request.Url
-        };
-
         await context.Clips.AddAsync(clip);
         await context.SaveChangesAsync();
 

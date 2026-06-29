@@ -1,6 +1,6 @@
-﻿using Server.Domain.Dto.Db;
-using Server.Domain.Dto.Request.Clips;
+﻿using Server.Domain.Dto.Request.Clips;
 using Server.Domain.Dto.Response;
+using Server.Domain.Entities;
 using Server.Domain.Interfaces.Repository;
 using Server.Domain.Interfaces.Service;
 
@@ -11,7 +11,7 @@ public class ClipService(IClipRepository clipRepository) : IClipService
     public async Task<ClipResponse> Create(CreateClip request, Guid userId)
     {
         var clip = await clipRepository.GetById(
-            await clipRepository.Create(new ClipCreateDb
+            await clipRepository.Create(new Clip
             {
                 Title = request.Content.Length > 20
                     ? request.Content[..20]
