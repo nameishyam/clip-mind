@@ -1,0 +1,22 @@
+@layer vuetify-overrides {
+  code,
+  pre,
+  .v-code {
+    font-family: var(--font-mono);
+  }
+}
+
+html,
+body,
+#app {
+  width: 400px;
+  min-width: 400px;
+  height: 600px;
+  min-height: 600px;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  box-sizing: border-box;
+}
